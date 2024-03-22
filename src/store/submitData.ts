@@ -10,10 +10,10 @@ export const updateSubmitDataAtom = atom(
   (get: Getter, set: Setter, data: Schema) => {
     const currentData = get(submitDataAtom);
     if (currentData === null) {
-      // submitDataAtom が null の場合、新しい配列をセットします。
+      // submitDataAtom が null の場合、新しい配列をセット
       set(submitDataAtom, [data]);
     } else {
-      // 既存の配列に新しいデータを追加します。
+      // 既存の配列に新しいデータを追加
       set(submitDataAtom, [...currentData, data]);
     }
   }
