@@ -5,6 +5,8 @@ import { SelectOptions } from './RhfSelect'
 import { initFormVal } from './utils'
 import { Schema, schema } from './schema'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { useAtom } from 'jotai'
+import { updateSubmitDataAtom } from './store/submitData'
 
 const selectOptions: SelectOptions[] = [
   { label: '選択してください', value: '' },
@@ -33,7 +35,7 @@ export const useSampleForm = () => {
     formState: { isSubmitting, isValid },
     handleSubmit,
     trigger,
-    // reset,
+    reset,
     getValues,
   } = useForm<Schema>({
     mode: 'onBlur', // 初回validation時を検索ボタンが押されたタイミングに設定
@@ -41,10 +43,11 @@ export const useSampleForm = () => {
     resolver: zodResolver(schema), // 外部のバリデーションスキーマを適用する
     defaultValues: initFormVal(schema),
   });
+  const [, setData] = useAtom(updateSubmitDataAtom);
 
   const onSubmit: SubmitHandler<Schema> = (data) => {
-    console.log('data', data);
-    // reset()
+    setData(data);
+    reset()
   }
 
   return {

@@ -7,6 +7,31 @@ import RhfTextField from './RhfTextField'
 import RhfRadio from './RhfRadio'
 import RhfDatePicker from './RhfDatePicker'
 import { useSampleForm } from './useSampleForm'
+import { useAtom } from 'jotai'
+import { getSubmitDataAtom} from './store/submitData'
+
+const FormData = () => {
+  const [data] = useAtom(getSubmitDataAtom);
+
+  if (data && data.length < 1) return undefined;
+
+  return (
+    <Box>
+      {data?.map(el => (
+        <Box>
+          <Box>text:{el.text}</Box>
+          <Box>number:{el.number}</Box>
+          <Box>select:{el.select}</Box>
+          <Box>checkbox:{el.checkbox}</Box>
+          <Box>checkboxes:{el.checkboxes}</Box>
+          <Box>radio:{el.radio}</Box>
+          <Box>date:{el.date}</Box>
+          <Box>textarea:{el.textarea}</Box>
+        </Box>
+      ))}
+    </Box>
+  )
+}
 
 function MuiRhfWithControllerAndZod() {
   const {
@@ -140,6 +165,7 @@ function MuiRhfWithControllerAndZod() {
           </Button>
         </Stack>
       </Box>
+      <FormData />
     </Container>
   )
 }
